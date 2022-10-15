@@ -6,7 +6,7 @@
 <h1>Novo Usuário</h1>
 
 <form action="{{ route('users.store') }}" method="post">
-    {{ csrf_token() }}
+    @csrf
     <input type="text" name="name" id="" placeholder="Nome">
     <input type="email" name="email" id="" placeholder="Email">
     <input type="password" name="password" id="" placeholder="Password">
