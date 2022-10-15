@@ -24,12 +24,14 @@ class StoreUpdateUserFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $id = $this->id ?? null; //Pega o ID do parametro da URL
+
+        $rules = [
             'name' => 'required|string|max:255|min:3',
             'email' => [
                 'required',
                 'email', //Verifica se e do tipo Email
-                'unique:users' //Verifica se ja existe no BD
+                "unique:users,email,{$id},id" //Verifica se ja existe no BD e cria excecao para informar o email ja gravado do mesmo user
             ],
             'password' => [
                 'required',
@@ -37,5 +39,16 @@ class StoreUpdateUserFormRequest extends FormRequest
                 'max:15'
             ]
         ];
+
+        //Mudando validacao quando for UPDATE
+        if($this->method('PUT')){
+            $rules['password'] = [
+                'nullable',
+                'min:6',
+                'max:15'
+            ];
+        }
+
+        return $rules;
     }
 }
