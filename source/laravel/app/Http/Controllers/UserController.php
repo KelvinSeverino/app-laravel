@@ -62,4 +62,23 @@ class UserController extends Controller
         //Redireciona para Listagem
         return redirect()->route('users.index');
     }
+
+    public function edit($id)
+    {
+        //Verifica se exste usuario, caso contrario retorna a index
+        if(!$user = User::find($id))        
+            return redirect()->route('users.index');
+
+        return view('users.edit', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        dd($request->all());
+        //Verifica se exste usuario, caso contrario retorna a index
+        if(!$user = User::find($id))        
+            return redirect()->route('users.index');
+
+        return view('users.edit', compact('user'));
+    }
 }
