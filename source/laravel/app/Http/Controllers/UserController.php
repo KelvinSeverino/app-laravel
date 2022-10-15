@@ -8,9 +8,20 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::get();
+        $search = $request->search;
+
+        //Pesquisa simples
+        //$users = User::where('name', 'LIKE', "%{$search}%")->get();
+
+        //Pesquisa com mais recursos usando funcao de callback
+        $users = User::where(function ($query) use ($search) {
+            if($search){
+                $query->where('email', $search);
+                $query->orWhere('name', 'LIKE', "%{$search}%");
+            }
+        })->get();
 
         return view('users/index', compact('users')); //compact é a mesma coisa que usar o ["users" => $users]
     }

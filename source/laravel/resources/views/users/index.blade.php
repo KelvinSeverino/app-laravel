@@ -8,6 +8,11 @@
     (<a href="{{ route('users.create') }}">Adicionar</a>)
 </h1>
 
+<form action="{{ route('users.index') }}" method="get">
+    <input type="text" name="search" placeholder="Pesquisar">
+    <button>Pesquisar</button>
+</form>
+
 <ul>
     {{-- Esse é um comentário que não será renderizado no HTML --}}
     @foreach ($users as $user)    
