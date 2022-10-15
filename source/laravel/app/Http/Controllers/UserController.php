@@ -97,4 +97,15 @@ class UserController extends Controller
         //Redireciona para Index
         return redirect()->route('users.index');
     }
+
+    public function destroy($id)
+    {
+        //Verifica se exste usuario, caso contrario retorna a index
+        if(!$user = User::find($id))        
+            return redirect()->route('users.index');
+
+        $user->delete();
+
+        return redirect()->route('users.index');
+    }
 }
