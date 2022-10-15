@@ -8,30 +8,28 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    protected $model;
+
+    public function __construct(User $user)
+    {
+        $this->model = new User;    
+    }
+
     public function index(Request $request)
     {
-        $search = $request->search;
-
-        //Pesquisa simples
-        //$users = User::where('name', 'LIKE', "%{$search}%")->get();
-
-        //Pesquisa com mais recursos usando funcao de callback
-        $users = User::where(function ($query) use ($search) {
-            if($search){
-                $query->where('email', $search);
-                $query->orWhere('name', 'LIKE', "%{$search}%");
-            }
-        })->get();
+        $users = $this->model->getUsers(
+            search: $request->search ?? '' //Passando usando recurso de Parametro nomeado do PHP8
+        );
 
         return view('users/index', compact('users')); //compact é a mesma coisa que usar o ["users" => $users]
     }
 
     public function show($id)
     {
-        //$user = User::where('id', $id)->first();
+        //$user = $this->model->where('id', $id)->first();
 
         //Verifica se exste usuario, caso contrario retorna a index
-        if(!$user = User::find($id))        
+        if(!$user = $this->model->find($id))        
             return redirect()->route('users.index');
         
         //Acessa rota com dados do usuario
@@ -55,20 +53,8 @@ class UserController extends Controller
         //Pega todos os inputs
         //dd($request->all());
 
-        //Gravacao da maneira tradicional
-        /*
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
-        */
-
-        //Gravacao de maneira mais pratica e otimizada
-        $data = $request->all();
-        $data['password'] = bcrypt($request->password);
-        
-        User::create($data);
+        //Chama metodo de gravar no BD
+        $this->model->storeUser($request);
 
         //Redireciona para Listagem
         return redirect()->route('users.index');
@@ -77,7 +63,7 @@ class UserController extends Controller
     public function edit($id)
     {
         //Verifica se exste usuario, caso contrario retorna a index
-        if(!$user = User::find($id))        
+        if(!$user = $this->model->find($id))        
             return redirect()->route('users.index');
 
         return view('users.edit', compact('user'));
@@ -86,24 +72,10 @@ class UserController extends Controller
     public function update(StoreUpdateUserFormRequest $request, $id)
     {
         //Verifica se exste usuario, caso contrario retorna a index
-        if(!$user = User::find($id))        
+        if(!$user = $this->model->find($id))        
             return redirect()->route('users.index');
 
-        //Gravacao da maneira tradicional
-        /*
-        $user->name = $request->name; ou $request->get('name'); 
-        $user->save();
-        */
-        
-        //Pegando dados do formulario
-        $data = $request->only('name', 'email');
-        if($request->password) //Verificando se informou senha
-        {
-            $data['password'] = bcrypt($request->password);
-        }
-
-        //Atualiza dados
-        $user->update($data);
+        $user->updateUser($request, $id);
 
         //Redireciona para Index
         return redirect()->route('users.index');
@@ -112,7 +84,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         //Verifica se exste usuario, caso contrario retorna a index
-        if(!$user = User::find($id))        
+        if(!$user = $this->model->find($id))        
             return redirect()->route('users.index');
 
         $user->delete();
