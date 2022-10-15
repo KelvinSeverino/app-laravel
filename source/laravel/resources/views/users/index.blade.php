@@ -3,7 +3,10 @@
 @section('title', 'Listagem dos Usuários')
 
 @section('content')
-<h1>Listagem de Usuários</h1>
+<h1>
+    Listagem de Usuários
+    (<a href="{{ route('users.create') }}">Adicionar</a>)
+</h1>
 
 <ul>
     {{-- Esse é um comentário que não será renderizado no HTML --}}
