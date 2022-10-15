@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateUserFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store(Request $request) //Request $request é funcao nativa que pega todos os dados vindo do form
+    public function store(StoreUpdateUserFormRequest $request) //Request $request é funcao nativa que pega todos os dados vindo do form
     {
         //Informa quais inputs serao considerados
         /*dd($request->only([
