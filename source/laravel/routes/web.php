@@ -3,7 +3,12 @@
 use App\Http\Controllers\{
     UserController
 };
+use App\Http\Controllers\Admin\CommentController;
 use Illuminate\Support\Facades\Route;
+
+/* ROTAS DOS COMENTARIOS */
+Route::get('users/{userId}/comments', [CommentController::class, 'index'])->name('comments.index');
+
 
 /* ROTAS DOS USUARIOS */
 //Listagem
