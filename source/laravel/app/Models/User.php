@@ -94,4 +94,10 @@ class User extends Authenticatable
         //Atualiza dados
         $this->update($data);
     }
+
+    public function comments()
+    {
+        //Relacionando tabela One to Many
+        return $this->hasMany(Comment::class, 'user_id');
+    }
 }
