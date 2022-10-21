@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 /* ROTAS DOS COMENTARIOS */
 Route::get('users/{userId}/comments', [CommentController::class, 'index'])->name('comments.index');
 
+Route::get('users/{userId}/comments/create', [CommentController::class, 'create'])->name('comments.create');
+Route::post('users/{userId}/comments', [CommentController::class, 'store'])->name('comments.store');
+
 
 /* ROTAS DOS USUARIOS */
 //Listagem
