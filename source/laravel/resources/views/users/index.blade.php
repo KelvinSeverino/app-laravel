@@ -16,27 +16,33 @@
 <table class="min-w-full leading-normal shadow-md rounded-lg overflow-hidden">
     <thead>
         <tr>
-          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
             Nome
-          </th>
-          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+        </th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
             E-mail
-          </th>
-          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+        </th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
             Editar
-          </th>
-          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+        </th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
             Detalhes
-          </th>
-          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+        </th>
+        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
             Comentários (0)
-          </th>
+        </th>
         </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
     @foreach ($users as $user)
         <tr>
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+            @if ($user->image)
+                <img src="{{ url("storage/{$user->image}") }}" alt="{{ $user->name }}" class="object-cover w-20">
+            @else                    
+                <img src="{{ url("laravel.png") }}" alt="{{ $user->name }}" class="object-cover w-20">
+            @endif
+            
                 {{ $user->name }}
             </td>
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -58,9 +64,9 @@
 
 <!-- Paginação usando appends para preservar o parametro de pesquisa -->
 <div class="py-4">
-  {{ $users->appends([
+{{ $users->appends([
     'search' => request()->get('search', '')
-  ])->links() }}
+])->links() }}
 </div>
 
 @endsection

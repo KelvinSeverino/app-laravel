@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
     ];
 
     /**
@@ -69,11 +71,20 @@ class User extends Authenticatable
         $user->email = $request->email;
         $user->password = $request->password;
         $user->save();
-        */
-
+        */   
+        
         //Gravacao de maneira mais pratica e otimizada
         $data = $request->all();
-        $data['password'] = bcrypt($request->password);
+        $data['password'] = bcrypt($request->password);         
+
+        if($request->image)
+        {
+            $data['image'] = $request->image->store('users'); //Armazena no diretorio users no path definido no .env
+            
+            //Upload renomeando arquivo
+            //$extension =  $request->image->getClientOriginalExtension();
+            //$data['image'] = $request->image->storeAs('users', now() . '.' . ".{$extension}"); //Armazena no diretorio users no path definido no .env com nome diferente
+        }
         
         $this->create($data);
     }
@@ -91,6 +102,15 @@ class User extends Authenticatable
         if($request->password) //Verificando se informou senha
         {
             $data['password'] = bcrypt($request->password);
+        }
+
+        if($request->image)
+        {
+            if(Storage::exists($this->image))
+            {
+                Storage::delete($this->image);
+            }
+            $data['image'] = $request->image->store('users'); //Armazena no diretorio users no path definido no .env
         }
 
         //Atualiza dados

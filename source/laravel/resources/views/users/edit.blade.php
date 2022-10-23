@@ -7,7 +7,7 @@
 
 @include('includes/validationsForm')
 
-<form action="{{ route('users.update', $user->id) }}" method="post">    
+<form action="{{ route('users.update', $user->id) }}" method="post" enctype="multipart/form-data">    
     @method('put') <!-- O metodo do lado cria esse input <input type="hidden" name="_method" value="put">-->
     @include('users/_partials/form')
 </form>
