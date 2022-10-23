@@ -40,6 +40,16 @@ Executar comando para gerar tabelas no banco
 php artisan migrate --seed --seeder=UsersSeeder
 ```
 
+Sair do container
+```sh
+exit
+```
+
+Executar comando instalar dependencias do pacote Laravel/Breeze
+```sh
+npm install
+```
+
 Executar comando rodar scripts do arquivo package.json
 ```sh
 npm run dev
