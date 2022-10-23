@@ -55,7 +55,7 @@ class User extends Authenticatable
             }
         })
         ->with('comments') //Agrega a consulta do metodo comments()
-        ->get();
+        ->paginate(10); //Por padrao pagina por 15 registros por pagina
 
         return $users;
     }
