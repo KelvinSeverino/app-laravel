@@ -36,9 +36,6 @@
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <a href="{{ route('comments.edit', ['userId' => $user->id, 'id' => $comment->id]) }}" class="bg-green-200 rounded-full py-2 px-6">Editar</a>
             </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <a href="{{ route('users.show', $user->id) }}" class="bg-orange-200 rounded-full py-2 px-6">Detalhes</a>
-            </td>
         </tr>
     @endforeach
     </tbody>

@@ -29,6 +29,8 @@ class CommentController extends Controller
             search: $request->search ?? '' //Passando usando recurso de Parametro nomeado do PHP8
         )->get();
 
+        //dd($comments);
+
         return view('users/comments/index', compact('user', 'comments'));
     }
 

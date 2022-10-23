@@ -53,7 +53,9 @@ class User extends Authenticatable
                 $query->where('email', $search);
                 $query->orWhere('name', 'LIKE', "%{$search}%");
             }
-        })->get();
+        })
+        ->with('comments') //Agrega a consulta do metodo comments()
+        ->get();
 
         return $users;
     }
@@ -95,7 +97,7 @@ class User extends Authenticatable
         $this->update($data);
     }
 
-    public function comments($search)
+    public function comments(string|null $search = '')
     {
         //Relacionando tabela One to Many
         return $this->hasMany(Comment::class, 'user_id')->where(function ($query) use ($search) {
