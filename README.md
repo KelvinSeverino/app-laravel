@@ -37,7 +37,7 @@ composer update
 
 Executar comando para gerar tabelas no banco
 ```sh
-php artisan migrate
+php artisan migrate --seed --seeder=UsersSeeder
 ```
 
 Executar comando rodar scripts do arquivo package.json
@@ -45,4 +45,7 @@ Executar comando rodar scripts do arquivo package.json
 npm run dev
 ```
 
-Feito os processo acima, você poderá acessar o sistema pelo link em [http://localhost:8080/login](http://localhost:8080/login)
+Feito os processo acima, você poderá acessar o sistema pelo link em [http://localhost:8080/login](http://localhost:8080/login) com os dados:
+
+* Login: kelvin@email.com
+* Senha: 12345678
