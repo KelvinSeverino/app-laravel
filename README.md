@@ -79,6 +79,11 @@ Executar comando para gerar tabelas no banco
 php artisan migrate --seed --seeder=UsersSeeder
 ```
 
+Executar comando para gerar link da Storage/Public
+```sh
+php artisan storage:link
+```
+
 Sair do container
 ```sh
 exit
