@@ -51,4 +51,30 @@ class CommentController extends Controller
 
         return redirect()->route('comments.index', $user->id);
     }
+
+    public function edit($userId, $id)
+    {
+        if(!$comment = $this->comment->find($id)){
+            return redirect()->route('users.index');
+        }
+
+        //Metodo que busca por relacionamento Many to One criado na Model
+        $user = $comment->user;
+
+        return view('users/comments/edit', compact('user', 'comment'));
+    }
+
+    public function update(Request $request, $userId, $id)
+    {
+        if(!$comment = $this->comment->find($id)){
+            return redirect()->route('users.index');
+        }
+
+        $comment->update([
+            "body" => $request->body,
+            "visible" => isset($request->visible)
+        ]);
+
+        return redirect()->route('comments.index', $comment->user_id);
+    }
 }
