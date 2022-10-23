@@ -18,13 +18,15 @@ class CommentController extends Controller
         $this->user = $user;    
     }
 
-    public function index($userId)
+    public function index(Request $request, $userId)
     {
         if(!$user = $this->user->find($userId)){
             return redirect()->route('users.index');
         }
 
-        $comments = $user->comments()->get();
+        $comments = $user->comments(
+            search: $request->search ?? '' //Passando usando recurso de Parametro nomeado do PHP8
+        )->get();
 
         return view('users/comments/index', compact('user', 'comments'));
     }

@@ -95,9 +95,13 @@ class User extends Authenticatable
         $this->update($data);
     }
 
-    public function comments()
+    public function comments($search)
     {
         //Relacionando tabela One to Many
-        return $this->hasMany(Comment::class, 'user_id');
+        return $this->hasMany(Comment::class, 'user_id')->where(function ($query) use ($search) {
+            if($search){
+                $query->where('body', 'LIKE', "%{$search}%");
+            }
+        });        
     }
 }
