@@ -106,7 +106,7 @@ class User extends Authenticatable
 
         if($request->image)
         {
-            if(Storage::exists($this->image))
+            if($this->image && Storage::exists($this->image))
             {
                 Storage::delete($this->image);
             }
