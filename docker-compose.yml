@@ -20,7 +20,7 @@ services:
       context: ./docker/laravel 
     image: server-laravel
     restart: unless-stopped 
-    working_dir: /var/www/
+    working_dir: /var/www/source/laravel
     volumes:
         - ./:/var/www
     depends_on:    
