@@ -18,7 +18,7 @@ git clone https://github.com/KelvinSeverino/app-laravel.git
 
 Acessar diretório do projeto
 ```sh
-cd app-laravel
+cd app-laravel/source/laravel/
 ```
 
 Crie o arquivo .env
