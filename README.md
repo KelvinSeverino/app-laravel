@@ -76,11 +76,6 @@ composer update
 
 Executar comando para gerar tabelas no banco
 ```sh
-php artisan migrate
-```
-
-Executar comando para preencher tabela User com informações de Login
-```sh
 php artisan migrate --seed --seeder=UsersSeeder
 ```
 
